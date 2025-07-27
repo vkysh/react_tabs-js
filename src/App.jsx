@@ -11,43 +11,13 @@ export const tabs = [
 ];
 
 export const App = () => {
-  const [activeTab, setActiveTab] = useState('tab-1');
-
-  const currentTab =
-    tabs.find(tab => {
-      return tab.id === activeTab;
-    }) ?? tabs[0];
-
-  const tabChanger = id => event => {
-    event.preventDefault();
-    if (id !== activeTab) {
-      setActiveTab(id);
-    }
-  };
+  const [activeTabId, setActiveTabId] = useState('tab-1');
 
   return (
-    <div className="section">
-      <h1 className="title">{`Selected tab is ${currentTab.title}`}</h1>
-
-      <div data-cy="TabsComponent">
-        <div className="tabs is-boxed">
-          <ul>
-            {tabs.map(tab => (
-              <li
-                className={tab.id === currentTab.id ? 'is-active' : ''}
-                data-cy="Tab"
-                key={tab.id}
-              >
-                <a href="#tab" onClick={tabChanger(tab.id)} data-cy="TabLink">
-                  {tab.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <Tabs tab={currentTab} />
-      </div>
-    </div>
+    <Tabs
+      tabs={tabs}
+      activeTabId={activeTabId}
+      onTabSelected={setActiveTabId}
+    />
   );
 };
